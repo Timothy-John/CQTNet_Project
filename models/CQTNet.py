@@ -41,7 +41,7 @@ class CQTNet(BasicModule):
         ]))
         self.pool = nn.AdaptiveMaxPool2d((1, 1))
         self.fc0 = nn.Linear(512, 300)
-        self.fc1 = nn.Linear(300, 10000)
+        self.fc1 = nn.Sigmoid(300, 1)
 
     def forward(self, x):
         # input [N, C, H, W] (W = 396)
