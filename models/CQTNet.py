@@ -45,7 +45,7 @@ class CQTNet(BasicModule):
 
     def forward(self, x):
         # input [N, C, H, W] (W = 396)
-        N = x.size()[0]
+        N = x.size()
         x = self.features(x)  # [N, 512, 57, 2~15]
         x = self.pool(x)
         x = x.view(N, -1)

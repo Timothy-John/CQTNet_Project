@@ -102,19 +102,31 @@ class CQT(Dataset):
             lambda x : torch.Tensor(x),
             lambda x : x.permute(1,0).unsqueeze(0),
         ])
-        filename = self.file_list[index].strip()
+        filename = self.file_list[index*2].strip()
         set_id, version_id = filename.split('.')[0].split('_')
         set_id, version_id = int(set_id), int(version_id)
-        in_path = self.indir+filename+'.npy'
-        data = np.load(in_path) # from 12xN to Nx12
+        for i in [1,0]:
+            if i==1:
+                in_path1 = self.indir+str(set_id)+'_'+'0.npy'
+                in_path2 = self.indir+str(set_id)+'_'+'1.npy'
+            else:
+                in_path1 = self.indir+str(set_id)+'_'+'0.npy'
+                if index<=(len(self.file_list)/2)-6:
+                    in_path2 = self.indir+str(set_id+5)+'_'+'1.npy'
+                else:
+                    in_path2 = self.indir+str(set_id-(len(self.file_list)/2)+5)+'_'+'1.npy'
+            data1 = np.load(in_path1) # from 12xN to Nx12
+            data2 = np.load(in_path2)
 
-        if self.mode is 'train':
-            data = transform_train(data)
-        else:
-            data = transform_test(data)
-        return data, int(set_id)
+            if self.mode is 'train':
+                data1 = transform_train(data1)
+                data2 = transform_train(data2)
+            else:
+                data1 = transform_test(data1)
+                data2 = transform_test(data2)
+            yield [data1, data2], i
     def __len__(self):
-        return len(self.file_list)
+        return len(self.file_list)/2
 
     
 if __name__=='__main__':
