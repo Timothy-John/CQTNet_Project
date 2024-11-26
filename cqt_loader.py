@@ -118,7 +118,7 @@ class CQT(Dataset):
             data1 = np.load(in_path1) # from 12xN to Nx12
             data2 = np.load(in_path2)
 
-            if self.mode is 'train':
+            if self.mode == 'train':
                 data1 = transform_train(data1)
                 data2 = transform_train(data2)
             else:

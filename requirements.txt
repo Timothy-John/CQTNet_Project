@@ -1,0 +1,8 @@
+torch
+numpy
+librosa
+tqdm
+torchvision
+pydub
+torchnet
+fire
