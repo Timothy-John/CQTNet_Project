@@ -16,16 +16,17 @@ from utility import *
 
 def custom_collate(batch):
     # Separate data and labels
-    data = [item[0] for item in batch]
+    data1 = [item[0][0] for item in batch]
+    data2 = [item[0][1] for item in batch]
     labels = [item[1] for item in batch]
-    
+
     # Stack the data tensors
-    data = torch.stack(data)
+    data1 = torch.stack(data1)
+    data2 = torch.stack(data2)
     
     # Convert labels to tensor
     labels = torch.LongTensor(labels)
-    
-    return data, labels
+    return [data1, data2], labels
 
 # multi_size train
 def multi_train(**kwargs):
@@ -183,9 +184,10 @@ def val_slow(model, dataloader, epoch):
     labels, features = None, None
 
     for ii, (data, label) in enumerate(dataloader):
-        input = data.to(opt.device)
+        input1 = data[0].to(opt.device)
+        input2 = data[1].to(opt.device)
         #print(input.shape)
-        score, feature = model(input)
+        score, feature = model([input1, input2])
         feature = feature.data.cpu().numpy()
         label = label.data.cpu().numpy()
         if features is not None:

@@ -46,7 +46,6 @@ class CQT(Dataset):
         elif current_length < target_length:
             pad_time = target_length - current_length
             data = F.pad(data, (0, pad_time), mode='constant', value=0)
-        
         return data
 
     def __getitem__(self, index):
@@ -89,9 +88,10 @@ class CQT(Dataset):
             else:
                 data1 = transform_test(data1)
                 data2 = transform_test(data2)
+
             return [data1, data2], i
     def __len__(self):
-        return len(self.file_list)/2
+        return int(len(self.file_list)/2)
 
     def SpecAugment(self, data):
         F = 24
