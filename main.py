@@ -105,19 +105,20 @@ def multi_train(**kwargs):
                     data=data2
                     label=label2
                 # train model
-                for d in [0,1]:
-                    input = data[d].requires_grad_()
-                    input = input.to(opt.device)
-                    target = label.to(opt.device)
+                input1 = data[0].requires_grad_()
+                input2 = data[1].requires_grad_()
+                input1 = input1.to(opt.device)
+                input2 = input2.to(opt.device)
+                target = label.to(opt.device)
 
-                    optimizer.zero_grad()
-                    score, _ = model(input)
-                    loss = criterion(score, target)
-                    loss.backward()
-                    optimizer.step()
+                optimizer.zero_grad()
+                score, _ = model([input1, input2])
+                loss = criterion(score, target)
+                loss.backward()
+                optimizer.step()
 
-                    running_loss += loss.item()
-                    num += target.shape[0]
+                running_loss += loss.item()
+                num += target.shape[0]
         running_loss /= num 
         print(running_loss)
         if parallel is True:
