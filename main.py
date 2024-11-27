@@ -14,6 +14,19 @@ import torch
 import torch.nn as nn
 from utility import *
 
+def custom_collate(batch):
+    # Separate data and labels
+    data = [item[0] for item in batch]
+    labels = [item[1] for item in batch]
+    
+    # Stack the data tensors
+    data = torch.stack(data)
+    
+    # Convert labels to tensor
+    labels = torch.LongTensor(labels)
+    
+    return data, labels
+
 # multi_size train
 def multi_train(**kwargs):
     parallel = True 
@@ -45,19 +58,25 @@ def multi_train(**kwargs):
     train_data0 = CQT('train', out_length=200)
     train_data1 = CQT('train', out_length=300)
     train_data2 = CQT('train', out_length=400)
-    val_data350 = CQT('songs350', out_length=None)
+    # val_data350 = CQT('songs350', out_length=None)
     val_data80 = CQT('songs80', out_length=None)
     val_data = CQT('val', out_length=None)
     test_data = CQT('test', out_length=None)
-    val_datatMazurkas = CQT('Mazurkas', out_length=None)
-    train_dataloader0 = DataLoader(train_data0, opt.batch_size, shuffle=True,num_workers=opt.num_workers)
-    train_dataloader1 = DataLoader(train_data1, opt.batch_size, shuffle=True,num_workers=opt.num_workers)
-    train_dataloader2 = DataLoader(train_data2, opt.batch_size, shuffle=True,num_workers=opt.num_workers)
-    val_dataloader = DataLoader(val_data, 1, shuffle=False,num_workers=1)
-    test_dataloader = DataLoader(test_data, 1, shuffle=False,num_workers=1)
-    val_dataloader80 = DataLoader(val_data80, 1, shuffle=False, num_workers=1)
-    val_dataloader350 = DataLoader(val_data350, 1, shuffle=False, num_workers=1)
-    val_dataloaderMazurkas = DataLoader(val_datatMazurkas,1, shuffle=False,num_workers=1)
+    # val_datatMazurkas = CQT('Mazurkas', out_length=None)
+    ## train_dataloader0 = DataLoader(train_data0, opt.batch_size, shuffle=True,num_workers=opt.num_workers)
+    ## train_dataloader1 = DataLoader(train_data1, opt.batch_size, shuffle=True,num_workers=opt.num_workers)
+    ## train_dataloader2 = DataLoader(train_data2, opt.batch_size, shuffle=True,num_workers=opt.num_workers)
+    ## val_dataloader = DataLoader(val_data, 1, shuffle=False,num_workers=1)
+    ## test_dataloader = DataLoader(test_data, 1, shuffle=False,num_workers=1)
+    ## val_dataloader80 = DataLoader(val_data80, 1, shuffle=False, num_workers=1)
+    train_dataloader0 = DataLoader(train_data0, opt.batch_size, shuffle=True, num_workers=opt.num_workers, collate_fn=custom_collate)
+    train_dataloader1 = DataLoader(train_data1, opt.batch_size, shuffle=True, num_workers=opt.num_workers, collate_fn=custom_collate)
+    train_dataloader2 = DataLoader(train_data2, opt.batch_size, shuffle=True, num_workers=opt.num_workers, collate_fn=custom_collate)
+    val_dataloader = DataLoader(val_data, 1, shuffle=False, num_workers=1, collate_fn=custom_collate)
+    test_dataloader = DataLoader(test_data, 1, shuffle=False, num_workers=1, collate_fn=custom_collate)
+    val_dataloader80 = DataLoader(val_data80, 1, shuffle=False, num_workers=1, collate_fn=custom_collate)
+    # val_dataloader350 = DataLoader(val_data350, 1, shuffle=False, num_workers=1)
+    # val_dataloaderMazurkas = DataLoader(val_datatMazurkas,1, shuffle=False,num_workers=1)
     #step3: criterion and optimizer
     criterion = torch.nn.CrossEntropyLoss()
     lr = opt.lr
@@ -69,7 +88,7 @@ def multi_train(**kwargs):
         optimizer,mode='min',factor=opt.lr_decay,patience=2, verbose=True,min_lr=5e-6)
     #train
     best_MAP=0
-    val_slow(model, val_dataloader350, -1)
+    val_slow(model, val_dataloader80, -1)
     for epoch in range(opt.max_epoch):
         running_loss = 0
         num = 0
@@ -108,9 +127,9 @@ def multi_train(**kwargs):
         scheduler.step(running_loss) 
         # validate
         MAP=0
-        MAP += val_slow(model, val_dataloader350, epoch)
+        #MAP += val_slow(model, val_dataloader350, epoch)
         MAP += val_slow(model, val_dataloader80, epoch)
-        val_slow(model, val_dataloaderMazurkas, epoch)
+        #val_slow(model, val_dataloaderMazurkas, epoch)
         if MAP>best_MAP:
             best_MAP=MAP
             print('*****************BEST*****************')
@@ -190,9 +209,6 @@ def val_slow(model, dataloader, epoch):
     model.train()
     return MAP
 
-    
-
-    
 def test(**kwargs):
     opt.batch_size=1
     opt.num_workers=1
