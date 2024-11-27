@@ -225,20 +225,20 @@ def test(**kwargs):
         model.load(opt.load_model_path)
     model.to(opt.device)
 
-    val_data350 = CQT('songs350', out_length=None)
-    val_data80 = CQT('songs80', out_length=None)
+    #val_data350 = CQT('songs350', out_length=None)
+    #val_data80 = CQT('songs80', out_length=None)
     val_data = CQT('val', out_length=None)
     test_data = CQT('test', out_length=None)
-    val_datatMazurkas = CQT('Mazurkas', out_length=None)
+    #val_datatMazurkas = CQT('Mazurkas', out_length=None)
     val_dataloader = DataLoader(val_data, 1, shuffle=False,num_workers=1)
     test_dataloader = DataLoader(test_data, 1, shuffle=False,num_workers=1)
-    val_dataloader80 = DataLoader(val_data80, 1, shuffle=False, num_workers=1)
-    val_dataloader350 = DataLoader(val_data350, 1, shuffle=False, num_workers=1)
-    val_dataloaderMazurkas = DataLoader(val_datatMazurkas,1, shuffle=False,num_workers=1)
+    #val_dataloader80 = DataLoader(val_data80, 1, shuffle=False, num_workers=1)
+    #val_dataloader350 = DataLoader(val_data350, 1, shuffle=False, num_workers=1)
+    #val_dataloaderMazurkas = DataLoader(val_datatMazurkas,1, shuffle=False,num_workers=1)
     
-    val_slow(model, val_dataloader350, 0)
+    #val_slow(model, val_dataloader350, 0)
     val_slow(model, val_dataloader80, 0)
-    val_slow(model, val_dataloaderMazurkas, 0)
+    #val_slow(model, val_dataloaderMazurkas, 0)
 
 
 
