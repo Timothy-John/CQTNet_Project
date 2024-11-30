@@ -10,14 +10,14 @@ import torch.nn.functional as F
 
 class CQT(Dataset):
     def __init__(self, mode='train', out_length=None):
-        self.indir = 'data/covers80_cqt_npy/'
+        self.indir = '/content/projectData/youtube_hpcp_npy/'
         self.mode = mode
         if mode == 'train': 
-            filepath = 'data/songs80_list.txt'
+            filepath = 'data/SHS100K-TRAIN_6'
         elif mode == 'val':
-            filepath = 'data/songs80_list.txt'
+            filepath = 'data/SHS100K-VAL'
         elif mode == 'test': 
-            filepath = 'data/songs80_list.txt'
+            filepath = 'data/SHS100K-TEST'
         elif mode == 'songs80': 
             self.indir = 'data/covers80_cqt_npy/'
             filepath = 'data/songs80_list.txt'
