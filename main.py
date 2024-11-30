@@ -16,9 +16,12 @@ from utility import *
 
 def custom_collate(batch):
     # Separate data and labels
-    data1 = [item[0][0] for item in batch]
-    data2 = [item[0][1] for item in batch]
-    labels = [item[1] for item in batch]
+    data1, data2, labels = [], [], []
+    for mini_iter in batch:
+      for item in mini_iter:
+        data1.append(item[0][0] for item in item)
+        data2.append(item[0][1] for item in item)
+        labels.append(item[1] for item in item)
 
     # Stack the data tensors
     data1 = torch.stack(data1)
@@ -26,7 +29,8 @@ def custom_collate(batch):
     
     # Convert labels to tensor
     labels = torch.LongTensor(labels)
-    return [data1, data2], labels
+    print(data1.shape)
+    yield [data1, data2], labels
 
 # multi_size train
 def multi_train(**kwargs):
