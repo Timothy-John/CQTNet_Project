@@ -10,14 +10,14 @@ import torch.nn.functional as F
 
 class CQT(Dataset):
     def __init__(self, mode='train', out_length=None):
-        self.indir = '/content/CQTNet_Binary/data/youtube_hpcp_npy/'
+        self.indir = 'data/covers80_cqt_npy/'
         self.mode = mode
         if mode == 'train': 
-            filepath = 'data/SHS100K-TRAIN_6'
+            filepath = 'data/songs80_list.txt'
         elif mode == 'val':
-            filepath = 'data/SHS100K-VAL'
+            filepath = 'data/songs80_list.txt'
         elif mode == 'test': 
-            filepath = 'data/SHS100K-TEST'
+            filepath = 'data/songs80_list.txt'
         elif mode == 'songs80': 
             self.indir = 'data/covers80_cqt_npy/'
             filepath = 'data/songs80_list.txt'
@@ -71,12 +71,17 @@ class CQT(Dataset):
         filename = self.file_list[ind].strip()
         set_id, version_id = filename.split('.')[0].split('_')
         set_id, version_id = int(set_id), int(version_id)
-        for e, ver in enumerate([line.split('_')[1] if line.split('_')[0]==v else "pass" for line in self.file_list]):
+        l = sorted([line.split('_')[1] if line.split('_')[0]==v else "pass" for line in self.file_list])
+        for e, ver in enumerate(l):
           if ver !="pass":
             for i in [1,0]:
                 if i==1:
+                    print(ver)
                     in_path1 = self.indir+str(set_id)+'_'+str(ver)+'.npy'
-                    in_path2 = self.indir+str(set_id)+'_'+str(ver)+'.npy'
+                    if l[e+1]!="pass":
+                        in_path2 = self.indir+str(set_id)+'_'+str(int(ver)+1)+'.npy'
+                    else:
+                        in_path2 = self.indir+str(set_id)+'_'+'0.npy'
                 else:
                     in_path1 = self.indir+str(set_id)+'_'+str(ver)+'.npy'
                     if index+3 <= len(np.unique([line.split('_')[0] for line in self.file_list])):
@@ -88,7 +93,7 @@ class CQT(Dataset):
                     s_id, v_id = fn.split('.')[0].split('_')
                     s_id, v_id = int(s_id), int(v_id)
                     in_path2 = self.indir+str(s_id)+'_'+str(v_id)+'.npy'
-                    
+                
                 data1 = np.load(in_path1) # from 12xN to Nx12
                 data2 = np.load(in_path2)
 
@@ -98,7 +103,7 @@ class CQT(Dataset):
                 else:
                     data1 = transform_test(data1)
                     data2 = transform_test(data2)
-                return [data1, data2], i
+                yield [data1, data2], i
     def __len__(self):
         return len(np.unique([line.split('_')[0] for line in self.file_list]))
 
