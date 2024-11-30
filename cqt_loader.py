@@ -9,15 +9,16 @@ import PIL
 import torch.nn.functional as F
 
 class CQT(Dataset):
-    def __init__(self, mode='train', out_length=None):
-        self.indir = 'data/covers80_cqt_npy/'
+    def __init__(self, mode='train', label=None, out_length=None):
+        self.label = label
+        self.indir = '/content/CQTNet_Binary/data/youtube_hpcp_npy/'
         self.mode = mode
         if mode == 'train': 
-            filepath = 'data/songs80_list.txt'
+            filepath = 'data/SHS100K-TRAIN_6'
         elif mode == 'val':
-            filepath = 'data/songs80_list.txt'
+            filepath = 'data/SHS100K-VAL'
         elif mode == 'test': 
-            filepath = 'data/songs80_list.txt'
+            filepath = 'data/SHS100K-TEST'
         elif mode == 'songs80': 
             self.indir = 'data/covers80_cqt_npy/'
             filepath = 'data/songs80_list.txt'
@@ -66,45 +67,37 @@ class CQT(Dataset):
             lambda x: x.unsqueeze(0),  # Add channel dimension
         ])
         
-        v = np.unique([line.split('_')[0] for line in self.file_list])[index]
-        ind = [line.split('_')[0] for line in self.file_list].index(v)
-        filename = self.file_list[ind].strip()
+        filename = self.file_list[index].strip()
         set_id, version_id = filename.split('.')[0].split('_')
         set_id, version_id = int(set_id), int(version_id)
-        l = sorted([line.split('_')[1] if line.split('_')[0]==v else "pass" for line in self.file_list])
-        for e, ver in enumerate(l):
-          if ver !="pass":
-            for i in [1,0]:
-                if i==1:
-                    in_path1 = self.indir+str(set_id)+'_'+str(ver)+'.npy'
-                    if l[e+1]!="pass":
-                        in_path2 = self.indir+str(set_id)+'_'+str(int(ver)+1)+'.npy'
-                    else:
-                        in_path2 = self.indir+str(set_id)+'_'+'0.npy'
-                else:
-                    in_path1 = self.indir+str(set_id)+'_'+str(ver)+'.npy'
-                    if index+3 <= len(np.unique([line.split('_')[0] for line in self.file_list])):
-                        vv = np.unique([line.split('_')[0] for line in self.file_list])[index+3]
-                    else:
-                        vv = np.unique([line.split('_')[0] for line in self.file_list])[index+3 - len(np.unique([line.split('_')[0] for line in self.file_list]))]
-                    indvv = [line.split('_')[0] for line in self.file_list].index(vv)
-                    fn = self.file_list[indvv].strip()
-                    s_id, v_id = fn.split('.')[0].split('_')
-                    s_id, v_id = int(s_id), int(v_id)
-                    in_path2 = self.indir+str(s_id)+'_'+str(v_id)+'.npy'
-                
-                data1 = np.load(in_path1) # from 12xN to Nx12
-                data2 = np.load(in_path2)
+        if self.label==1:
+            in_path1 = self.indir+str(set_id)+'_'+str(version_id)+'.npy'
+            if ((index+1)<len(self.file_list)) and (int(self.file_list[index+1].strip().split('.')[0].split('_')[0]) == int(set_id)):
+              in_path2 = self.indir+str(set_id)+'_'+str(version_id+1)+'.npy'
+            else:
+              in_path2 = self.indir+str(set_id)+'_'+'0.npy'
+        if self.label==0:
+            in_path1 = self.indir+str(set_id)+'_'+str(version_id)+'.npy'
+            if (index+1)<len(self.file_list):
+              ind = sorted(list(np.unique([line.split('_')[0] for line in self.file_list]))).index(str(set_id))
+              set_id_n = sorted(list(np.unique([line.split('_')[0] for line in self.file_list])))[ind+1]
+              in_path2 = self.indir+str(set_id_n)+'_'+'0.npy'
+            else:
+              in_path2 = self.indir+'0_0.npy'
+        print(in_path1, in_path2)
+        data1 = np.load(in_path1) # from 12xN to Nx12
+        data2 = np.load(in_path2)
+            
+        if self.mode == 'train':
+            data1 = transform_train(data1)
+            data2 = transform_train(data2)
+        else:
+            data1 = transform_test(data1)
+            data2 = transform_test(data2)
 
-                if self.mode == 'train':
-                    data1 = transform_train(data1)
-                    data2 = transform_train(data2)
-                else:
-                    data1 = transform_test(data1)
-                    data2 = transform_test(data2)
-                yield [data1, data2], i
+        return [data1, data2], self.label
     def __len__(self):
-        return len(np.unique([line.split('_')[0] for line in self.file_list]))
+        return len(self.file_list)
 
     def SpecAugment(self, data):
         F = 24
