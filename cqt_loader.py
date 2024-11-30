@@ -10,7 +10,7 @@ import torch.nn.functional as F
 
 class CQT(Dataset):
     def __init__(self, mode='train', out_length=None):
-        self.indir = '/content/projectData/youtube_hpcp_npy/'
+        self.indir = '/content/CQTNet_Binary/data/youtube_hpcp_npy/'
         self.mode = mode
         if mode == 'train': 
             filepath = 'data/SHS100K-TRAIN_6'
@@ -66,32 +66,41 @@ class CQT(Dataset):
             lambda x: x.unsqueeze(0),  # Add channel dimension
         ])
         
-        filename = self.file_list[index].strip()
+        v = np.unique([line.split('_')[0] for line in self.file_list])[index]
+        ind = [line.split('_')[0] for line in self.file_list].index(v)
+        filename = self.file_list[ind].strip()
         set_id, version_id = filename.split('.')[0].split('_')
         set_id, version_id = int(set_id), int(version_id)
-        for i in [1,0]:
-            if i==1:
-                in_path1 = self.indir+str(set_id)+'_'+'0.npy'
-                in_path2 = self.indir+str(set_id)+'_'+'1.npy'
-            else:
-                in_path1 = self.indir+str(set_id)+'_'+'0.npy'
-                if index<=(len(self.file_list)/2)-6:
-                    in_path2 = self.indir+str(set_id+5)+'_'+'1.npy'
+        for e, ver in enumerate([line.split('_')[1] if line.split('_')[0]==v else "pass" for line in self.file_list]):
+          if ver !="pass":
+            for i in [1,0]:
+                if i==1:
+                    in_path1 = self.indir+str(set_id)+'_'+str(ver)+'.npy'
+                    in_path2 = self.indir+str(set_id)+'_'+str(ver)+'.npy'
                 else:
-                    in_path2 = self.indir+str(set_id-(len(self.file_list)/2)+5)+'_'+'1.npy'
-            data1 = np.load(in_path1) # from 12xN to Nx12
-            data2 = np.load(in_path2)
+                    in_path1 = self.indir+str(set_id)+'_'+str(ver)+'.npy'
+                    if index+3 <= len(np.unique([line.split('_')[0] for line in self.file_list])):
+                        vv = np.unique([line.split('_')[0] for line in self.file_list])[index+3]
+                    else:
+                        vv = np.unique([line.split('_')[0] for line in self.file_list])[index+3 - len(np.unique([line.split('_')[0] for line in self.file_list]))]
+                    indvv = [line.split('_')[0] for line in self.file_list].index(vv)
+                    fn = self.file_list[indvv].strip()
+                    s_id, v_id = fn.split('.')[0].split('_')
+                    s_id, v_id = int(s_id), int(v_id)
+                    in_path2 = self.indir+str(s_id)+'_'+str(v_id)+'.npy'
+                    
+                data1 = np.load(in_path1) # from 12xN to Nx12
+                data2 = np.load(in_path2)
 
-            if self.mode == 'train':
-                data1 = transform_train(data1)
-                data2 = transform_train(data2)
-            else:
-                data1 = transform_test(data1)
-                data2 = transform_test(data2)
-
-            return [data1, data2], i
+                if self.mode == 'train':
+                    data1 = transform_train(data1)
+                    data2 = transform_train(data2)
+                else:
+                    data1 = transform_test(data1)
+                    data2 = transform_test(data2)
+                return [data1, data2], i
     def __len__(self):
-        return int(len(self.file_list)/2)
+        return len(np.unique([line.split('_')[0] for line in self.file_list]))
 
     def SpecAugment(self, data):
         F = 24
