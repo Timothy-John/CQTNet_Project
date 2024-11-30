@@ -76,7 +76,6 @@ class CQT(Dataset):
           if ver !="pass":
             for i in [1,0]:
                 if i==1:
-                    print(ver)
                     in_path1 = self.indir+str(set_id)+'_'+str(ver)+'.npy'
                     if l[e+1]!="pass":
                         in_path2 = self.indir+str(set_id)+'_'+str(int(ver)+1)+'.npy'
