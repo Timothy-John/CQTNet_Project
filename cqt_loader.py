@@ -75,15 +75,15 @@ class CQT(Dataset):
             if ((index+1)<len(self.file_list)) and (int(self.file_list[index+1].strip().split('.')[0].split('_')[0]) == int(set_id)):
               in_path2 = self.indir+str(set_id)+'_'+str(self.file_list[index+1].strip().split('.')[0].split('_')[1])+'.npy'
             else:
-              in_path2 = self.indir+str(set_id)+'_'+'0.npy'
+              in_path2 = self.indir+str(set_id)+'_'+str(self.file_list[index-1].strip().split('.')[0].split('_')[1])+'.npy'
         if self.label==0:
             in_path1 = self.indir+str(set_id)+'_'+str(version_id)+'.npy'
             if (index+1)<len(self.file_list):
               ind = sorted(list(np.unique([line.split('_')[0] for line in self.file_list]))).index(str(set_id))
-              set_id_n = sorted(list(np.unique([line.split('_')[0] for line in self.file_list])))[ind+1]
-              in_path2 = self.indir+str(set_id_n)+'_'+'0.npy'
+              set_id_n, ver_id_n = sorted(list(np.unique([line.split('_') for line in self.file_list])))[ind+1]
+              in_path2 = self.indir+str(set_id_n)+'_'+str(ver_id_n)+'.npy'
             else:
-              in_path2 = self.indir+'0_0.npy'
+              in_path2 = self.indir+str(self.file_list[0].strip())+'.npy'
         data1 = np.load(in_path1) # from 12xN to Nx12
         data2 = np.load(in_path2)
             
