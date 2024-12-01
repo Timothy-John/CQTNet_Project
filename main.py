@@ -104,7 +104,7 @@ def multi_train(**kwargs):
         optimizer,mode='min',factor=opt.lr_decay,patience=2, verbose=True,min_lr=5e-6)
     #train label 1
     best_MAP=0
-    val_slow(model, val_dataloader80_1, -1)
+    #val_slow(model, val_dataloader80_1, -1)
     for epoch in range(opt.max_epoch):
         running_loss = 0
         num = 0

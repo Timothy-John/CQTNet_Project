@@ -24,7 +24,7 @@ class CQT(Dataset):
             filepath = 'data/songs80_list.txt'
         
         with open(filepath, 'r') as fp:
-            self.file_list = [line.rstrip() for line in fp]
+            self.file_list = sorted([line.rstrip() for line in fp])
         self.out_length = out_length
 
     def pad_or_truncate(self, data, target_length, target_freq=84):
@@ -73,7 +73,7 @@ class CQT(Dataset):
         if self.label==1:
             in_path1 = self.indir+str(set_id)+'_'+str(version_id)+'.npy'
             if ((index+1)<len(self.file_list)) and (int(self.file_list[index+1].strip().split('.')[0].split('_')[0]) == int(set_id)):
-              in_path2 = self.indir+str(set_id)+'_'+str(version_id+1)+'.npy'
+              in_path2 = self.indir+str(set_id)+'_'+str(self.file_list[index+1].strip().split('.')[0].split('_')[1])+'.npy'
             else:
               in_path2 = self.indir+str(set_id)+'_'+'0.npy'
         if self.label==0:
@@ -84,7 +84,6 @@ class CQT(Dataset):
               in_path2 = self.indir+str(set_id_n)+'_'+'0.npy'
             else:
               in_path2 = self.indir+'0_0.npy'
-        print(in_path1, in_path2)
         data1 = np.load(in_path1) # from 12xN to Nx12
         data2 = np.load(in_path2)
             
