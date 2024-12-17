@@ -1,253 +1,159 @@
 import os
 import torch
-from cqt_loader import *
+from torch import nn
 from torch.utils.data import DataLoader
-import torchvision.transforms as transforms
 import models
 from config import opt
-from torchnet import meter
+from utility import *
 from tqdm import tqdm
 import numpy as np
-import time
-import torch.nn.functional as F
-import torch
-import torch.nn as nn
-from utility import *
+from cqt_loader import IndianCoverCQT
+import random
 
-
-###########################################
 def custom_collate(batch):
-    # Separate data and labels
     data = [item[0] for item in batch]
     labels = [item[1] for item in batch]
-    
-    # Stack the data tensors
     data = torch.stack(data)
-    
-    # Convert labels to tensor
     labels = torch.LongTensor(labels)
-    
     return data, labels
 
-
-
-
-# multi_size train
-def multi_train(**kwargs):
-    parallel = True 
+def transfer_learning(**kwargs):
+    opt.batch_size = 32
+    opt.num_workers = 4
     opt.model = 'CQTNet'
-    opt.notes='CQTNet'
-    opt.batch_size=32
-    #opt.load_latest=True
-    #opt.load_model_path = ''
+    opt.load_model_path = '/content/drive/MyDrive/CQTNet_SpecAugment_x3.pth'
+    # opt.load_model_path = '/content/CQTNet/check_points/latest.pth'
+    opt.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     opt._parse(kwargs)
-    # step1: configure model
-    
-    model = getattr(models, opt.model)() 
-    if parallel is True: 
-        model = torch.nn.DataParallel(model)
-    if parallel is True:
-        if opt.load_latest is True:
-            model.module.load_latest(opt.notes)
-        elif opt.load_model_path:
-            model.module.load(opt.load_model_path)
-    else:
-        if opt.load_latest is True:
-            model.load_latest(opt.notes)
-        elif opt.load_model_path:
-            model.load(opt.load_model_path)
-    model.to(opt.device)
-    print(model)
-    # step2: data
-   
-    train_data0 = CQT('train', out_length=200)
-    train_data1 = CQT('train', out_length=300)
-    train_data2 = CQT('train', out_length=400)
-    # val_data350 = CQT('songs350', out_length=None)
-    val_data80 = CQT('songs80', out_length=None)
-    val_data = CQT('val', out_length=None)
-    test_data = CQT('test', out_length=None)
-    # val_datatMazurkas = CQT('Mazurkas', out_length=None)
-    ## train_dataloader0 = DataLoader(train_data0, opt.batch_size, shuffle=True,num_workers=opt.num_workers)
-    ## train_dataloader1 = DataLoader(train_data1, opt.batch_size, shuffle=True,num_workers=opt.num_workers)
-    ## train_dataloader2 = DataLoader(train_data2, opt.batch_size, shuffle=True,num_workers=opt.num_workers)
-    ## val_dataloader = DataLoader(val_data, 1, shuffle=False,num_workers=1)
-    ## test_dataloader = DataLoader(test_data, 1, shuffle=False,num_workers=1)
-    ## val_dataloader80 = DataLoader(val_data80, 1, shuffle=False, num_workers=1)
-    train_dataloader0 = DataLoader(train_data0, opt.batch_size, shuffle=True, num_workers=opt.num_workers, collate_fn=custom_collate)
-    train_dataloader1 = DataLoader(train_data1, opt.batch_size, shuffle=True, num_workers=opt.num_workers, collate_fn=custom_collate)
-    train_dataloader2 = DataLoader(train_data2, opt.batch_size, shuffle=True, num_workers=opt.num_workers, collate_fn=custom_collate)
-    val_dataloader = DataLoader(val_data, 1, shuffle=False, num_workers=1, collate_fn=custom_collate)
-    test_dataloader = DataLoader(test_data, 1, shuffle=False, num_workers=1, collate_fn=custom_collate)
-    val_dataloader80 = DataLoader(val_data80, 1, shuffle=False, num_workers=1, collate_fn=custom_collate)
-    # val_dataloader350 = DataLoader(val_data350, 1, shuffle=False, num_workers=1)
-    # val_dataloaderMazurkas = DataLoader(val_datatMazurkas,1, shuffle=False,num_workers=1)
-    #step3: criterion and optimizer
-    criterion = torch.nn.CrossEntropyLoss()
-    lr = opt.lr
-    if parallel is True:
-        optimizer = torch.optim.Adam(model.module.parameters(), lr=lr, weight_decay=opt.weight_decay)
-    else:
-        optimizer = torch.optim.Adam(model.parameters(), lr=lr,weight_decay=opt.weight_decay)
-    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
-        optimizer,mode='min',factor=opt.lr_decay,patience=2, verbose=True,min_lr=5e-6)
-    #train
-    best_MAP=0
-    val_slow(model, val_dataloader80, -1)
-    for epoch in range(opt.max_epoch):
-        running_loss = 0
-        num = 0
-        for (data0, label0),(data1, label1),(data2, label2) in tqdm(zip(train_dataloader0, train_dataloader1, train_dataloader2)):
-            for flag in range(3):
-                if flag==0:
-                    data=data0
-                    label=label0
-                elif flag==1:
-                    data=data1
-                    label=label1
-                else:
-                    data=data2
-                    label=label2
-                # train model
-                input = data.requires_grad_()
-                input = input.to(opt.device)
-                target = label.to(opt.device)
+    print(f"Using device: {opt.device}")
 
-                optimizer.zero_grad()
-                score, _ = model(input)
-                loss = criterion(score, target)
+    # Load pre-trained model
+    model = getattr(models, opt.model)()
+    model.load(opt.load_model_path)
+    model = model.to(opt.device)
+
+    # Freeze all layers except the last two
+    for name, param in model.named_parameters():
+        if 'fc0' not in name and 'fc1' not in name:
+            param.requires_grad = False
+
+    # Modify the last layer to output embeddings
+    model.fc1 = nn.Linear(300, 300).to(opt.device)  # Change output to 300-dimensional embedding
+
+    # Prepare Indian Cover Songs dataset
+    train_data = IndianCoverCQT()
+    val_data = IndianCoverCQT()
+    test_data = IndianCoverCQT()
+
+    train_loader = DataLoader(train_data, batch_size=opt.batch_size, shuffle=True, num_workers=opt.num_workers, collate_fn=custom_collate)
+    val_loader = DataLoader(val_data, batch_size=1, shuffle=False, num_workers=1, collate_fn=custom_collate)
+    test_loader = DataLoader(test_data, batch_size=1, shuffle=False, num_workers=1, collate_fn=custom_collate)
+
+    # Define loss function and optimizer
+    criterion = nn.TripletMarginLoss(margin=0.3)
+    optimizer = torch.optim.Adam(filter(lambda p: p.requires_grad, model.parameters()), lr=1e-4)
+
+    # Training loop
+    num_epochs = 50
+    best_val_map = 0
+    best_model_path = None
+
+    for epoch in range(num_epochs):
+        model.train()
+        total_loss = 0
+        for inputs, labels in tqdm(train_loader, desc=f"Epoch {epoch+1}/{num_epochs}"):
+            inputs, labels = inputs.to(opt.device), labels.to(opt.device)
+
+            optimizer.zero_grad()
+            embeddings, _ = model(inputs)
+            
+            # Create triplets
+            anchor, positive, negative = create_triplets(embeddings, labels)
+            
+            if anchor.size(0) > 0:  # Check if we have valid triplets
+                loss = criterion(anchor, positive, negative)
                 loss.backward()
                 optimizer.step()
+                total_loss += loss.item()
+            else:
+                print("No valid triplets in this batch. Skipping.")
 
-                running_loss += loss.item()
-                num += target.shape[0]
-        running_loss /= num 
-        print(running_loss)
-        if parallel is True:
-            model.module.save(opt.notes)
-        else:
-            model.save(opt.notes)
-        # update learning rate
-        scheduler.step(running_loss) 
-        # validate
-        MAP=0
-        # MAP += val_slow(model, val_dataloader350, epoch)
-        MAP += val_slow(model, val_dataloader80, epoch)
-        # val_slow(model, val_dataloaderMazurkas, epoch)
-        if MAP>best_MAP:
-            best_MAP=MAP
-            print('*****************BEST*****************')
-        print('')
-        model.train()
+        avg_loss = total_loss / len(train_loader)
+        print(f"Epoch {epoch+1}/{num_epochs}, Loss: {avg_loss:.4f}")
 
-   
-@torch.no_grad()
-def multi_val_slow(model, dataloader1,dataloader2, epoch):
-    model.eval()
-    labels, features,features2 = None, None, None
-    for ii, (data, label) in enumerate(dataloader1):
-        input = data.to(opt.device)
-        #print(input.shape)
-        score, feature = model(input)
-        feature = feature.data.cpu().numpy()
-        label = label.data.cpu().numpy()
-        if features is not None:
-            features = np.concatenate((features, feature), axis=0)
-            labels = np.concatenate((labels,label))
-        else:
-            features = feature
-            labels = label
-    for ii, (data, label) in enumerate(dataloader2):
-        input = data.to(opt.device)
-        #print(input.shape)
-        score, feature = model(input)
-        feature = feature.data.cpu().numpy()
-        if features2 is not None:
-            features2 = np.concatenate((features2, feature), axis=0)
-        else:
-            features2 = feature
+        # Evaluate on validation set
+        val_map, val_top10, val_rank1 = val_slow(model, val_loader, epoch, "Indian Validation Set")
+        print(f"Validation - MAP: {val_map:.4f}, Top10: {val_top10:.4f}, Rank1: {val_rank1:.2f}")
+
+        if val_map > best_val_map:
+            best_val_map = val_map
+            best_model_path = f"check_points/CQTNet_transfer_learning_epoch_{epoch+1}.pth"
+            torch.save(model.state_dict(), best_model_path)
+            print(f"New best model saved to {best_model_path}")
+
+    # Load best model and evaluate on test set
+    model.load_state_dict(torch.load(best_model_path))
+    test_map, test_top10, test_rank1 = val_slow(model, test_loader, -1, "Indian Test Set")
+    print(f"Final Test Set Performance - MAP: {test_map:.4f}, Top10: {test_top10:.4f}, Rank1: {test_rank1:.2f}")
+
+    return best_model_path
+
+def create_triplets(embeddings, labels):
+    """
+    Create triplets for triplet loss
+    """
+    triplets = []
+    for i in range(len(embeddings)):
+        anchor = embeddings[i].unsqueeze(0)
+        positive_indices = (labels == labels[i]).nonzero().squeeze()
+        negative_indices = (labels != labels[i]).nonzero().squeeze()
+        
+        # Handle cases where indices might be 0-d tensors
+        if positive_indices.dim() == 0:
+            positive_indices = positive_indices.unsqueeze(0)
+        if negative_indices.dim() == 0:
+            negative_indices = negative_indices.unsqueeze(0)
+        
+        if len(positive_indices) > 1 and len(negative_indices) > 0:
+            positive_index = random.choice(positive_indices.tolist())
+            while positive_index == i:
+                positive_index = random.choice(positive_indices.tolist())
+            negative_index = random.choice(negative_indices.tolist())
             
-    features = norm(features+features2)
-    dis2d = get_dis2d4(features)
+            positive = embeddings[positive_index].unsqueeze(0)
+            negative = embeddings[negative_index].unsqueeze(0)
+            
+            triplets.append((anchor, positive, negative))
     
-    if len(labels) == 350:
-        MAP, top10, rank1 = calc_MAP(dis2d, labels,[100, 350])
-    else :
-        MAP, top10, rank1 = calc_MAP(dis2d, labels)
+    if triplets:
+        anchors, positives, negatives = zip(*triplets)
+        return torch.cat(anchors).to(opt.device), torch.cat(positives).to(opt.device), torch.cat(negatives).to(opt.device)
+    else:
+        return embeddings[0].unsqueeze(0), embeddings[0].unsqueeze(0), embeddings[0].unsqueeze(0)
 
-    print(epoch, MAP, top10, rank1 )
-    model.train()
-    return MAP
-
-    
 @torch.no_grad()
-def val_slow(model, dataloader, epoch):
+def val_slow(model, dataloader, epoch, dataset_name=None):
     model.eval()
-    total, correct = 0, 0
-    labels, features = None, None
+    all_embeddings = []
+    all_labels = []
 
-    for ii, (data, label) in enumerate(dataloader):
+    for data, label in tqdm(dataloader, desc=f"Evaluating {dataset_name}"):
         input = data.to(opt.device)
-        #print(input.shape)
-        score, feature = model(input)
-        feature = feature.data.cpu().numpy()
-        label = label.data.cpu().numpy()
-        if features is not None:
-            features = np.concatenate((features, feature), axis=0)
-            labels = np.concatenate((labels,label))
-        else:
-            features = feature
-            labels = label
-    features = norm(features)
-    #dis2d = get_dis2d4(features)
-    dis2d = -np.matmul(features, features.T) # [-1,1] Because normalized, so mutmul is equal to ED
-    np.save('dis80.npy',dis2d)
-    np.save('label80.npy',labels)
-    if len(labels) == 350:
-        MAP, top10, rank1 = calc_MAP(dis2d, labels,[100, 350])
-    #elif len(labels) == 160:    MAP, top10, rank1 = calc_MAP(dis2d, labels,[80, 160])
-    else :
-        MAP, top10, rank1 = calc_MAP(dis2d, labels)
+        embedding, _ = model(input)
+        all_embeddings.append(embedding.cpu().numpy())
+        all_labels.append(label.cpu().numpy())
 
-    print(epoch, MAP, top10, rank1 )
-    model.train()
-    return MAP
-
+    embeddings = np.concatenate(all_embeddings)
+    labels = np.concatenate(all_labels)
     
-
+    embeddings = norm(embeddings)
+    dis2d = -np.matmul(embeddings, embeddings.T)
     
-def test(**kwargs):
-    opt.batch_size=1
-    opt.num_workers=1
-    opt.model = 'CQTNet'
-    opt.load_latest = False
-    opt.load_model_path = 'check_points/CQTNet.pth'
-    opt._parse(kwargs)
-    
-    model = getattr(models, opt.model)() 
-    #print(model)
-    if opt.load_latest is True:
-        model.load_latest(opt.notes)
-    elif opt.load_model_path:
-        model.load(opt.load_model_path)
-    model.to(opt.device)
+    MAP, top10, rank1 = calc_MAP(dis2d, labels)
 
-    # val_data350 = CQT('songs350', out_length=None)
-    val_data80 = CQT('songs80', out_length=None)
-    val_data = CQT('val', out_length=None)
-    test_data = CQT('test', out_length=None)
-    # val_datatMazurkas = CQT('Mazurkas', out_length=None)
-    val_dataloader = DataLoader(val_data, 1, shuffle=False,num_workers=1)
-    test_dataloader = DataLoader(test_data, 1, shuffle=False,num_workers=1)
-    val_dataloader80 = DataLoader(val_data80, 1, shuffle=False, num_workers=1)
-    # val_dataloader350 = DataLoader(val_data350, 1, shuffle=False, num_workers=1)
-    # val_dataloaderMazurkas = DataLoader(val_datatMazurkas,1, shuffle=False,num_workers=1)
-    
-    # val_slow(model, val_dataloader350, 0)
-    val_slow(model, val_dataloader80, 0)
-    # val_slow(model, val_dataloaderMazurkas, 0)
-
-
+    print(f"\nResults for {dataset_name}:")
+    print(f"MAP: {MAP:.4f}, Top10: {top10:.4f}, Rank1: {rank1:.2f}")
+    return MAP, top10, rank1
 
 if __name__=='__main__':
     import fire
