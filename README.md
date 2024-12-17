@@ -6,6 +6,9 @@ python  --  3
 pytorch --  1.0
 librosa --  0.63
 
+## Install Dependenncies
+pip install -r requirements.txt
+
 ## Dataset
 Second Hand Songs 100K (SHS100K), which is collected from Second Hand Songs website. 
 

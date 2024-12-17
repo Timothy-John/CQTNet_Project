@@ -41,14 +41,12 @@ class CQTNet(BasicModule):
         ]))
         self.pool = nn.AdaptiveMaxPool2d((1, 1))
         self.fc0 = nn.Linear(512, 300)
-        self.fc1 = nn.Sigmoid()
+        self.fc1 = nn.Linear(300, 10000)
 
     def forward(self, x):
         # input [N, C, H, W] (W = 396)
-        N = x[0].size()[0]
-        x1 = self.features(x[0])  # [N, 512, 57, 2~15]
-        x2 = self.features(x[1])
-        x = torch.cat((x1,x2), dim=-1)
+        N = x.size()[0]
+        x = self.features(x)  # [N, 512, 57, 2~15]
         x = self.pool(x)
         x = x.view(N, -1)
         feature = self.fc0(x)

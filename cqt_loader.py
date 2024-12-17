@@ -9,9 +9,8 @@ import PIL
 import torch.nn.functional as F
 
 class CQT(Dataset):
-    def __init__(self, mode='train', label=None, out_length=None):
-        self.label = label
-        self.indir = '/content/CQTNet_Binary/data/youtube_hpcp_npy/'
+    def __init__(self, mode='train', out_length=None):
+        self.indir = '/content/projectData/youtube_hpcp_npy/'
         self.mode = mode
         if mode == 'train': 
             filepath = 'data/SHS100K-TRAIN_6'
@@ -24,7 +23,7 @@ class CQT(Dataset):
             filepath = 'data/songs80_list.txt'
         
         with open(filepath, 'r') as fp:
-            self.file_list = sorted([line.rstrip() for line in fp])
+            self.file_list = [line.rstrip() for line in fp]
         self.out_length = out_length
 
     def pad_or_truncate(self, data, target_length, target_freq=84):
@@ -47,6 +46,7 @@ class CQT(Dataset):
         elif current_length < target_length:
             pad_time = target_length - current_length
             data = F.pad(data, (0, pad_time), mode='constant', value=0)
+        
         return data
 
     def __getitem__(self, index):
@@ -70,31 +70,19 @@ class CQT(Dataset):
         filename = self.file_list[index].strip()
         set_id, version_id = filename.split('.')[0].split('_')
         set_id, version_id = int(set_id), int(version_id)
-        if self.label==1:
-            in_path1 = self.indir+str(set_id)+'_'+str(version_id)+'.npy'
-            if ((index+1)<len(self.file_list)) and (int(self.file_list[index+1].strip().split('.')[0].split('_')[0]) == int(set_id)):
-              in_path2 = self.indir+str(set_id)+'_'+str(self.file_list[index+1].strip().split('.')[0].split('_')[1])+'.npy'
-            else:
-              in_path2 = self.indir+str(set_id)+'_'+str(self.file_list[index-1].strip().split('.')[0].split('_')[1])+'.npy'
-        if self.label==0:
-            in_path1 = self.indir+str(set_id)+'_'+str(version_id)+'.npy'
-            if (index+1)<len(self.file_list):
-              ind = sorted(list(np.unique([line.split('_')[0] for line in self.file_list]))).index(str(set_id))
-              set_id_n, ver_id_n = sorted(list(np.unique([line.split('_') for line in self.file_list])))[ind+1]
-              in_path2 = self.indir+str(set_id_n)+'_'+str(ver_id_n)+'.npy'
-            else:
-              in_path2 = self.indir+str(self.file_list[0].strip())+'.npy'
-        data1 = np.load(in_path1) # from 12xN to Nx12
-        data2 = np.load(in_path2)
-            
-        if self.mode == 'train':
-            data1 = transform_train(data1)
-            data2 = transform_train(data2)
-        else:
-            data1 = transform_test(data1)
-            data2 = transform_test(data2)
+        in_path = self.indir + filename + '.npy'
+        data = np.load(in_path)
 
-        return [data1, data2], self.label
+        if self.mode == 'train':
+            data = transform_train(data)
+        else:
+            data = transform_test(data)
+
+        # Pad or truncate to a fixed length and frequency
+        data = self.pad_or_truncate(data, 400, 84)
+
+        return data, int(set_id)
+
     def __len__(self):
         return len(self.file_list)
 
