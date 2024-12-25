@@ -135,7 +135,7 @@ class CQT(Dataset):
 
 class IndianCoverCQT(Dataset):
     def __init__(self, out_length=None):
-        self.indir = 'data/IndianCover_cqt_npy/'
+        self.indir = '/content/drive/MyDrive/CoverSongDetection/IndianCover_cqt_npy'
         self.filepath = 'data/coversIndian_list.txt'
         
         with open(self.filepath, 'r') as fp:
