@@ -41,9 +41,9 @@ def transfer_learning(**kwargs):
     model.fc1 = nn.Linear(300, 300).to(opt.device)  # Change output to 300-dimensional embedding
 
     # Prepare Indian Cover Songs dataset
-    train_data = IndianCoverCQT()
-    val_data = IndianCoverCQT()
-    test_data = IndianCoverCQT()
+    train_data = IndianCoverCQT('train')
+    val_data = IndianCoverCQT('val')
+    test_data = IndianCoverCQT('test')
 
     train_loader = DataLoader(train_data, batch_size=opt.batch_size, shuffle=True, num_workers=opt.num_workers, collate_fn=custom_collate)
     val_loader = DataLoader(val_data, batch_size=1, shuffle=False, num_workers=1, collate_fn=custom_collate)
@@ -54,7 +54,7 @@ def transfer_learning(**kwargs):
     optimizer = torch.optim.Adam(filter(lambda p: p.requires_grad, model.parameters()), lr=1e-4)
 
     # Training loop
-    num_epochs = 50
+    num_epochs = 200
     best_val_map = 0
     best_model_path = None
 
