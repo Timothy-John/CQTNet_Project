@@ -19,7 +19,7 @@ def custom_collate(batch):
 
 def transfer_learning(**kwargs):
     opt.batch_size = 32
-    opt.num_workers = 4
+    opt.num_workers = 2
     opt.model = 'CQTNet'
     opt.load_model_path = '/content/drive/MyDrive/CQTNet_SpecAugment_x3.pth'
     # opt.load_model_path = '/content/CQTNet/check_points/latest.pth'
@@ -54,7 +54,7 @@ def transfer_learning(**kwargs):
     optimizer = torch.optim.Adam(filter(lambda p: p.requires_grad, model.parameters()), lr=1e-4)
 
     # Training loop
-    num_epochs = 200
+    num_epochs = 500
     best_val_map = 0
     best_model_path = None
 
