@@ -137,9 +137,9 @@ class IndianCoverCQT(Dataset):
     def __init__(self, mode='train', out_length=None):
         self.indir = '/content/drive/MyDrive/CoverSongDetection/IndianCover_cqt_npy'
         if mode=='train':
-          self.filepath = 'data/coversIndian_list.txt'
+          self.filepath = 'data/coversIndian_train_val.txt'
         elif mode=='val':
-          self.filepath = 'data/coversIndian_list.txt'
+          self.filepath = 'data/coversIndian_train_val.txt'
         else:
           self.filepath = 'data/coversIndian_test.txt'
         
