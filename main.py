@@ -32,10 +32,18 @@ def transfer_learning(**kwargs):
     model.load(opt.load_model_path)
     model = model.to(opt.device)
 
+    # Only 1st conv layer frozen
+    for name, param in model.named_parameters():
+       if 'conv0' in name:
+           param.requires_grad = False
+       else:
+           param.requires_grad = True
+    """
     # Freeze all layers except the last two
     for name, param in model.named_parameters():
         if 'fc0' not in name and 'fc1' not in name:
             param.requires_grad = False
+    """
 
     # Modify the last layer to output embeddings
     model.fc1 = nn.Linear(300, 300).to(opt.device)  # Change output to 300-dimensional embedding
@@ -54,7 +62,7 @@ def transfer_learning(**kwargs):
     optimizer = torch.optim.Adam(filter(lambda p: p.requires_grad, model.parameters()), lr=1e-4)
 
     # Training loop
-    num_epochs = 500
+    num_epochs = 200
     best_val_map = 0
     best_model_path = None
 
