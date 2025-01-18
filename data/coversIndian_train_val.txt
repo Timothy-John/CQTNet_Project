@@ -1,0 +1,314 @@
+34_Vaisakha Sandhye_Original
+34_Vaisakha Sandhye_Cover
+35_Onnam Ragam_Original
+35_Onnam Ragam_Cover
+36_Koottil Ninnum_Original
+36_Koottil Ninnum_Cover
+37_Pon Veene_Original
+37_Pon Veene_Cover
+38_Unarumee Ganam_Cover
+38_Unarumee Ganam_Original
+39_Kannodu Kannaaya Swapnangal_Original
+39_Kannodu Kannaaya Swapnangal_Cover
+40_Megham Poothuthudangi_Original
+40_Megham Poothuthudangi_Cover
+41_Malarthoppithil_Original
+41_Malarthoppithil_Cover
+42_Rathisughasaramayi_Original
+42_Rathisughasaramayi_Cover
+43_Shyamameghame Nee_Original
+43_Shyamameghame Nee_Cover
+44_Pudamuri_Original
+44_Pudamuri_Cover
+45_Swarna Mukile_Cover
+45_Swarna Mukile_Original
+46_Poovaai Virinju_Original
+46_Poovaai Virinju_Cover
+47_Neeyen Kinaavo_Original
+47_Neeyen Kinaavo_Cover
+48_Nadha Nee Varum_Original
+48_Nadha Nee Varum_Cover
+49_Ezhu Swarangalum_Original
+49_Ezhu Swarangalum_Cover
+50_Aalippazham Perukkaan_Original
+50_Aalippazham Perukkaan_Cover
+51_Pularithoomanju_Original
+51_Pularithoomanju_Cover
+52_Yeh Haseen Vadiyan_Cover
+52_Yeh Haseen Vadiyan_Original
+53_Tum Mile Dil Khile_Original
+53_Tum Mile Dil Khile_Cover
+54_Sandese Aate Hain_Original
+54_Sandese Aate Hain_Cover
+55_Main Agar Kahoon_Original
+55_Main Agar Kahoon_Cover
+56_Do Pal_Original
+56_Do Pal_Cover
+57_Mere Haath Mein_Original
+57_Mere Haath Mein_Cover
+58_Piyu Bole_Original
+58_Piyu Bole_Cover
+59_Agar Tum Saath ho_Original
+59_Agar Tum Saath ho_Cover
+60_Barso Re_Original
+60_Barso Re_Cover
+61_Jashn-E-Bahaaraa_Original
+61_Jashn-E-Bahaaraa_Cover
+62_Tere Bina_Original
+62_Tere Bina_Cover
+63_ Guzarish_Original
+63_ Guzarish_Cover
+64_Luka Chuppi_Original
+64_Luka Chuppi_Cover
+65_Dil Se Re_Cover
+65_Dil Se Re_Original
+66_Jiya Jale_Cover
+66_Jiya Jale_Original
+67_Chupke Se_Cover
+67_Chupke Se_Original
+68_Woh Lamhe_Original
+68_Woh Lamhe_Cover
+69_Saans_Original
+69_Saans_Cover
+70_Mehndi Hai Rachnewali_Original
+70_Mehndi Hai Rachnewali_Cover
+71_Heer_Original
+71_Heer_Cover
+72_Jiya Re_Original
+72_Jiya Re_Cover
+73_Tu Hai_Original
+73_Tu Hai_Cover
+74_O Humdum Suniyo Re_Cover
+74_O Humdum Suniyo Re_Original
+75_Zehnaseeb_Original
+75_Zehnaseeb_Cover
+76_Phir Se Ud Chala_Cover
+76_Phir Se Ud Chala_Original
+77_Pyar Diwana Hota Hai_Cover
+77_Pyar Diwana Hota Hai_Original
+78_Dil De Diya Hai_Original
+78_Dil De Diya Hai_Cover
+79_Udja Kale Kawan_Original
+79_Udja Kale Kawan_Cover
+80_Dil Hai Ki Manta Nahin_Original
+80_Dil Hai Ki Manta Nahin_Cover
+81_Khamoshiyan _Original
+81_Khamoshiyan _Cover
+82_Mere Bina_Original
+82_Mere Bina_Cover
+83_Kabhi jo badal barse_Original
+83_Kabhi jo badal barse_Cover
+84_Sach keh raha hai deewana_Original
+84_Sach keh raha hai deewana_Cover
+85_Khwaja Mere Khwaja_Original
+85_Khwaja Mere Khwaja_Cover
+86_Tera Chehra_Original
+86_Tera Chehra_Cover
+87_Jadu Hai Nasha Hai_Original
+87_Jadu Hai Nasha Hai_Cover
+88_Teri jhuki nazar_Original
+88_Teri jhuki nazar_Cover
+89_Haan Tu Hain_Original
+89_Haan Tu Hain_Cover
+90_Agar Tum Mil Jao_Original
+90_Agar Tum Mil Jao_Cover
+91_Bakhuda Tumhi Ho_Original
+91_Bakhuda Tumhi Ho_Cover
+92_Dil Diyan Gallan_Original
+92_Dil Diyan Gallan_Cover
+93_Kaun tujhe_Original
+93_Kaun tujhe_Cover
+94_Maula Mere Maula_Original
+94_Maula Mere Maula_Cover
+95_Duaa_Original
+95_Duaa_Cover
+96_Dil Ko Tumse Pyar Hua_Original
+96_Dil Ko Tumse Pyar Hua_Cover
+97_Kabhi Kabhi Mere Dil Mein_Original
+97_Kabhi Kabhi Mere Dil Mein_Cover
+98_Zara Zara_Original
+98_Zara Zara_Cover
+99_Tum Se Hi_Original
+99_Tum Se Hi_Cover
+100_Do Lafzon Ki Hai Dil Ki Kahani_Original
+100_Do Lafzon Ki Hai Dil Ki Kahani_Cover
+101_Chand Si Mehbooba_Cover
+101_Chand Si Mehbooba_Original
+102_Sau Aasmaan_Original
+102_Sau Aasmaan_Cover
+103_Raah Mein Unse Mulaqat_Original
+103_Raah Mein Unse Mulaqat_Cover
+104_Chand Se Parda Kijiye_Original
+104_Chand Se Parda Kijiye_Cover
+105_Vaisakha Sandhye_Original
+105_Vaisakha Sandhye_Cover
+106_Onnam Ragam_Original
+106_Onnam Ragam_Cover
+107_Koottil Ninnum_Original
+36_Koottil Ninnum_Cover
+108_Pon Veene_Original
+108_Pon Veene_Cover
+109_Unarumee Ganam_Cover
+109_Unarumee Ganam_Original
+110_Kannodu Kannaaya Swapnangal_Original
+110_Kannodu Kannaaya Swapnangal_Cover
+111_Megham Poothuthudangi_Original
+111_Megham Poothuthudangi_Cover
+112_Rathisughasaramayi_Original
+112_Rathisughasaramayi_Cover
+113_Shyamameghame Nee_Original
+113_Shyamameghame Nee_Cover
+114_Pudamuri_Original
+114_Pudamuri_Cover
+115_Swarna Mukile_Cover
+115_Swarna Mukile_Original
+116_Poovaai Virinju_Original
+116_Poovaai Virinju_Cover
+117_Neeyen Kinaavo_Original
+117_Neeyen Kinaavo_Cover
+118_Nadha Nee Varum_Original
+118_Nadha Nee Varum_Cover
+119_Ezhu Swarangalum_Original
+119_Ezhu Swarangalum_Cover
+120_Aalippazham Perukkaan_Original
+120_Aalippazham Perukkaan_Cover
+121_Pularithoomanju_Original
+121_Pularithoomanju_Cover
+122_Yeh Haseen Vadiyan_Cover
+112_Yeh Haseen Vadiyan_Original
+123_Tum Mile Dil Khile_Original
+123_Tum Mile Dil Khile_Cover
+124_Sandese Aate Hain_Original
+124_Sandese Aate Hain_Cover
+125_Do Pal_Original
+125_Do Pal_Cover
+126_Mere Haath Mein_Original
+126_Mere Haath Mein_Cover
+127_Piyu Bole_Original
+127_Piyu Bole_Cover
+128_Agar Tum Saath ho_Original
+128_Agar Tum Saath ho_Cover
+129_Barso Re_Original
+129_Barso Re_Cover
+130_Jashn-E-Bahaaraa_Original
+130_Jashn-E-Bahaaraa_Cover
+131_Tere Bina_Original
+131_Tere Bina_Cover
+132_ Guzarish_Original
+132_ Guzarish_Cover
+133_Luka Chuppi_Original
+133_Luka Chuppi_Cover
+134_Dil Se Re_Cover
+134_Dil Se Re_Original
+135_Jiya Jale_Cover
+135_Jiya Jale_Original
+136_Chupke Se_Cover
+136_Chupke Se_Original
+137_Woh Lamhe_Original
+137_Woh Lamhe_Cover
+138_Saans_Original
+138_Saans_Cover
+139_Mehndi Hai Rachnewali_Original
+139_Mehndi Hai Rachnewali_Cover
+140_Heer_Original
+140_Heer_Cover
+141_Jiya Re_Original
+141_Jiya Re_Cover
+142_Tu Hai_Original
+142_Tu Hai_Cover
+143_O Humdum Suniyo Re_Cover
+143_O Humdum Suniyo Re_Original
+144_Zehnaseeb_Original
+144_Zehnaseeb_Cover
+145_Pyar Diwana Hota Hai_Cover
+145_Pyar Diwana Hota Hai_Original
+146_Dil De Diya Hai_Original
+146_Dil De Diya Hai_Cover
+147_Udja Kale Kawan_Original
+147_Udja Kale Kawan_Cover
+148_Dil Hai Ki Manta Nahin_Original
+148_Dil Hai Ki Manta Nahin_Cover
+149_Khamoshiyan _Original
+149_Khamoshiyan _Cover
+150_Mere Bina_Original
+150_Mere Bina_Cover
+151_Kabhi jo badal barse_Original
+151_Kabhi jo badal barse_Cover
+152_Sach keh raha hai deewana_Original
+152_Sach keh raha hai deewana_Cover
+153_Khwaja Mere Khwaja_Original
+153_Khwaja Mere Khwaja_Cover
+154_Tera Chehra_Original
+154_Tera Chehra_Cover
+155_Jadu Hai Nasha Hai_Original
+155_Jadu Hai Nasha Hai_Cover
+156_Teri jhuki nazar_Original
+156_Teri jhuki nazar_Cover
+157_Haan Tu Hain_Original
+157_Haan Tu Hain_Cover
+158_Agar Tum Mil Jao_Original
+158_Agar Tum Mil Jao_Cover
+159_Bakhuda Tumhi Ho_Original
+159_Bakhuda Tumhi Ho_Cover
+160_Dil Diyan Gallan_Original
+160_Dil Diyan Gallan_Cover
+161_Kaun tujhe_Original
+161_Kaun tujhe_Cover
+162_Maula Mere Maula_Original
+162_Maula Mere Maula_Cover
+163_Duaa_Original
+163_Duaa_Cover
+164_Kabhi Kabhi Mere Dil Mein_Original
+164_Kabhi Kabhi Mere Dil Mein_Cover
+165_Zara Zara_Original
+165_Zara Zara_Cover
+166_Tum Se Hi_Original
+166_Tum Se Hi_Cover
+167_Do Lafzon Ki Hai Dil Ki Kahani_Original
+167_Do Lafzon Ki Hai Dil Ki Kahani_Cover
+168_Chand Si Mehbooba_Cover
+168_Chand Si Mehbooba_Original
+169_Sau Aasmaan_Original
+169_Sau Aasmaan_Cover
+170_Bahara_Original
+170_Bahara_Cover
+171_Ek dil ek jaan_Cover
+171_Ek dil ek jaan_Original
+172_Kuch Kuch Hota Hai_Cover
+172_Kuch Kuch Hota Hai_Original
+173_Banjaara_Original
+173_Banjaara_Cover
+174_Dil dooba_Original
+174_Dil dooba_Cover
+175_Dekhte Dekhte_Original
+175_Dekhte Dekhte_Cover
+176_Hoshwalo ko khabar kya_Original
+176_Hoshwalo ko khabar kya_Cover
+177_Aasan nahi yahan_Original
+177_Aasan nahi yahan_Cover
+178_Kya hua tera wada_Original
+178_Kya hua tera wada_Cover
+179_Lo safar_Original
+179_Lo safar_Cover
+180_Main koi aisa geet gaon_Original
+180_Main koi aisa geet gaon_Cover
+181_Mere naam tu_Original
+181_Mere naam tu_Cover
+182_Sanu ek pal chain_Original
+182_Sanu ek pal chain_Cover
+183_Titli_Original
+183_Titli_Cover
+184_Choo Lo_Original
+184_Choo Lo_Cover
+185_BAARISHEIN_Cover
+185_BAARISHEIN_Original
+186_Husn_Original
+186_Husn_Cover
+187_Ve Kamleya_Original
+187_Ve Kamleya_Cover
+188_Shayad_Cover
+188_Shayad_Original
+189_Kaise Hua_Original
+189_Kaise Hua_Cover
+190_Tujhe Kitna Chahne Lage_Original
+190_Tujhe Kitna Chahne Lage_Cover
