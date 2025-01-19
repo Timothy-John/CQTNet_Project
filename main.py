@@ -10,6 +10,10 @@ import numpy as np
 from cqt_loader import IndianCoverCQT
 import random
 
+#Setting Randomization Seed for Reproducibility
+random.seed(7)
+torch.manual_seed(7)
+
 def custom_collate(batch):
     data = [item[0] for item in batch]
     labels = [item[1] for item in batch]
