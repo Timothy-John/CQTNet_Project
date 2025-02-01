@@ -102,7 +102,7 @@ def transfer_learning(**kwargs):
             best_model_path = f"check_points/CQTNet_transfer_learning_epoch_{epoch+1}.pth"
             torch.save(model.state_dict(), best_model_path)
             print(f"New best model saved to {best_model_path}")
-            model.load_state_dict(torch.load(best_model_path)) #Loading the best model for next epoch
+        model.load_state_dict(torch.load(best_model_path)) #Loading the best model for next epoch
 
     # Load best model and evaluate on test set
     model.load_state_dict(torch.load(best_model_path))
