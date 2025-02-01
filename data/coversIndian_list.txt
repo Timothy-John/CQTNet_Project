@@ -211,7 +211,7 @@
 106_Onnam Ragam_Original
 106_Onnam Ragam_Cover
 107_Koottil Ninnum_Original
-36_Koottil Ninnum_Cover
+107_Koottil Ninnum_Cover
 108_Pon Veene_Original
 108_Pon Veene_Cover
 109_Unarumee Ganam_Cover
@@ -241,7 +241,7 @@
 121_Pularithoomanju_Original
 121_Pularithoomanju_Cover
 122_Yeh Haseen Vadiyan_Cover
-112_Yeh Haseen Vadiyan_Original
+122_Yeh Haseen Vadiyan_Original
 123_Tum Mile Dil Khile_Original
 123_Tum Mile Dil Khile_Cover
 124_Sandese Aate Hain_Original
@@ -378,3 +378,175 @@
 189_Kaise Hua_Cover
 190_Tujhe Kitna Chahne Lage_Original
 190_Tujhe Kitna Chahne Lage_Cover
+191_Bahara_Original
+191_Bahara_Cover
+192_Tera zikr_Original
+192_Tera zikr_Cover
+193_Ek dil ek jaan_Cover
+193_Ek dil ek jaan_Original
+194_Kuch Kuch Hota Hai_Original
+194_Kuch Kuch Hota Hai_Cover
+195_Banjaara_Original
+195_Banjaara_Cover
+196_Dil dooba_Original
+196_Dil dooba_Cover
+197_Dekhte Dekhte_Original
+197_Dekhte Dekhte_Cover
+198_Hoshwalo ko khabar kya_Original
+198_Hoshwalo ko khabar kya_Cover
+199_Aasan nahi yahan_Original
+199_Aasan nahi yahan_Cover
+200_Kya hua tera wada_Original
+200_Kya hua tera wada_Cover
+201_Lo safar_Original
+201_Lo safar_Cover
+202_Main koi aisa geet gaon_Original
+202_Main koi aisa geet gaon_Cover
+203_Mere naam tu_Original
+203_Mere naam tu_Cover
+204_O sathi_Original
+204_O sathi_Cover
+205_Sanu ek pal chain_Original
+205_Sanu ek pal chain_Cover
+206_Tere mere_Original
+206_Tere mere_Cover
+207_Titli_Original
+207_Titli_Cover
+208_Kabhi Shaam Dhale_Original
+208_Kabhi Shaam Dhale_Cover
+209_Chura ke dil mera_Original
+209_Chura ke dil mera_Cover
+210_Do dil mil rahe hai_Original
+210_Do dil mil rahe hai_Cover
+211_Baazigar_Original
+211_Baazigar_Cover
+212_Aakh hai bhari bhari_Original
+212_Aakh hai bhari bhari_Cover
+213_Pardesi Pardesi_Original
+213_Pardesi Pardesi_Cover
+214_Aapke pyar me_Original
+214_Aapke pyar me_Cover
+215_Aankhon se tune ye kya kah diya_Original
+215_Aankhon se tune ye kya kah diya_Cover
+216_Humko sirf tumse pyaar hai_Original
+216_Humko sirf tumse pyaar hai_Cover
+217_Jeeta tha jiske liye_Original
+217_Jeeta tha jiske liye_Cover
+218_Aararo Varaminnoree moham_Original
+218_Aararo Varaminnoree moham_Cover
+219_Kaamini_Original
+219_Kaamini_Cover
+220_Kisa Paathiyil_Original
+220_Kisa Paathiyil_Cover
+222_Vaanaville_Original
+222_Vaanaville_Cover
+223_Kadavathoru Thoni_Original
+223_Kadavathoru Thoni_Cover
+224_Ee Kaattu vannu_Original
+224_Ee Kaattu vannu_Cover
+225_Rasathi_Original
+225_Rasathi_Cover
+226_Enthaavo_Original
+226_Enthaavo_Cover
+227_Puthumazhayai _Original
+227_Puthumazhayai _Cover
+228_sadaa paalaya_Original
+228_sadaa paalaya_Cover
+229_Akale aaro paadum_Original
+229_Akale aaro paadum_Cover
+230_Ethu Kari Raavilum_Original
+230_Ethu Kari Raavilum_Cover
+231_Oru Kari Mukilinu_Original
+231_Oru Kari Mukilinu_Cover
+232_Arikil Ini Njaan Varaam_Original
+232_Arikil Ini Njaan Varaam_Cover
+233_Kannile Poika_Original
+233_Kannile Poika_Cover
+234_Eeran Kaattin_Original
+234_Eeran Kaattin_Cover
+235_Varu Pokaam Parakkaam_Original
+235_Varu Pokaam Parakkaam_Cover
+236_Thambiran_Original
+236_Thambiran_Cover
+237_Akaashame_Original
+237_Akaashame_Cover
+238_Mazhanila_Original
+238_Mazhanila_Cover
+239_Baby I need you_Original
+239_Baby I need you_Cover
+240_Aayilyam_Cover
+240_Aayilyam_Original
+241_Kaalam kettu poyi_Original
+241_Kaalam kettu poyi_Cover
+242_Ee Mizhikalen_Original
+242_Ee Mizhikalen_Cover
+243_Nizhalariyathe_Original
+243_Nizhalariyathe_Cover
+244_Nanavere_Cover
+244_Nanavere_Original
+245_Then Nila_Original
+245_Then Nila_Cover
+246_Nanayumee Mazha_Original
+246_Nanayumee Mazha_Cover
+247_Do Naina_Original
+247_Do Naina_Cover
+248_Lailakame_Original
+248_Lailakame_Cover
+249_Puzhu Pulikal_Original
+249_Puzhu Pulikal_Cover
+250_Sundari Pennee_Original
+250_Sundari Pennee_Cover
+251_ekantham_Original
+251_ekantham_Cover
+252_Neelakkannulla Maanea_Original
+252_Neelakkannulla Maanea_Cover
+253_Udanjuvo_Original
+253_Udanjuvo_Cover
+254_Allahu Akbar_Original
+254_Allahu Akbar_Cover
+255_Thennal Nilavinte_Original
+255_Thennal Nilavinte_Cover
+256_Thaane Pookum_Original
+256_Thaane Pookum_Cover
+257_Njanum Neeyum_Original
+257_Njanum Neeyum_Cover
+258_Pavizha Mazha_Original
+258_Pavizha Mazha_Cover
+259_Mizhiyariyathe_Cover
+259_Mizhiyariyathe_Original
+260_Aayiram Kannumay_Original
+260_Aayiram Kannumay_Cover
+261_Onnu thodan ullil_Original
+261_Onnu thodan ullil_Cover
+262_Parayathe ariyathe_Original
+262_Parayathe ariyathe_Cover
+263_Enthinu Veroru Sooryodayam_Original
+263_Enthinu Veroru Sooryodayam_Cover
+264_Mizhiyil Ninnum_Original
+264_Mizhiyil Ninnum_Cover
+265_Viral Thottal Viriyunna_Original
+265_Viral Thottal Viriyunna_Cover
+266_Marudaani_Cover
+266_Marudaani_Original
+267_Varamanjaladiya_Original
+267_Varamanjaladiya_Cover
+268_Aaru Paranju_Original
+268_Aaru Paranju_Cover
+269_Nadodi Poonthinkal_Original
+269_Nadodi Poonthinkal_Cover
+270_Teri Umeed Tera Intezar_Cover
+270_Teri Umeed Tera Intezar_Original
+271_Tune jo na kaha_Cover
+271_Tune jo na kaha_Original
+272_Thiruvaavaniraavu_Cover
+272_Thiruvaavaniraavu_Original
+273_Hemanthamen_Cover
+273_Hemanthamen_Original
+274_Raave_Cover
+274_Raave_Original
+221_Sreeraagamo Thedunnu_Original
+221_Sreeraagamo Thedunnu_Cover
+275_Nilaavinte Neelabhasma_Cover
+275_Nilaavinte Neelabhasma_Original
+276_Thanka Thinkal_Original
+276_Thanka Thinkal_Cover
