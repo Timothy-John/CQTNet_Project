@@ -145,7 +145,7 @@
 106_Onnam Ragam_Original
 106_Onnam Ragam_Cover
 107_Koottil Ninnum_Original
-36_Koottil Ninnum_Cover
+107_Koottil Ninnum_Cover
 108_Pon Veene_Original
 108_Pon Veene_Cover
 109_Unarumee Ganam_Cover
@@ -175,7 +175,7 @@
 121_Pularithoomanju_Original
 121_Pularithoomanju_Cover
 122_Yeh Haseen Vadiyan_Cover
-112_Yeh Haseen Vadiyan_Original
+122_Yeh Haseen Vadiyan_Original
 123_Tum Mile Dil Khile_Original
 123_Tum Mile Dil Khile_Cover
 124_Sandese Aate Hain_Original
